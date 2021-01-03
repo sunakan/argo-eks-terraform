@@ -1,5 +1,7 @@
 == Terraform + EKS + ArgoWorkflow
 
+=== EKS
+
 .準備
 ----
 $ cd terraform
@@ -38,3 +40,24 @@ kube-system   deployment.apps/coredns   2/2     2            2           14m
 NAMESPACE     NAME                                 DESIRED   CURRENT   READY   AGE
 kube-system   replicaset.apps/coredns-86f7d88d77   2         2         2       13m
 ----
+
+.クリーンアップ
+----
+$ terraform destroy
+----
+
+=== Tips1
+
+.別シェルでwatchで監視
+----
+$ kubectl get all -o wide --all-namespaces
+----
+
+=== ダッシュボード
+
+.ダッシュボードの用意
+----
+$ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+$ helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+----
+
