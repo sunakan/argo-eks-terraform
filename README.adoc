@@ -1,1 +1,40 @@
 == Terraform + EKS + ArgoWorkflow
+
+.準備
+----
+$ cd terraform
+$ terraform init
+$ teerraform apply
+10分くらいまつ
+$ aws eks --region ap-northeast-1 update-kubeconfig --name eks-example
+----
+
+.確認
+----
+$ kubectl get all --all-namespaces
+----
+
+.出力結果
+----
+NAMESPACE     NAME                           READY   STATUS    RESTARTS   AGE
+kube-system   pod/aws-node-bq6j4             1/1     Running   0          10m
+kube-system   pod/aws-node-n82bl             1/1     Running   0          10m
+kube-system   pod/coredns-86f7d88d77-2v77x   1/1     Running   0          13m
+kube-system   pod/coredns-86f7d88d77-54jkh   1/1     Running   0          13m
+kube-system   pod/kube-proxy-257cp           1/1     Running   0          10m
+kube-system   pod/kube-proxy-sh7m8           1/1     Running   0          10m
+
+NAMESPACE     NAME                 TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)         AGE
+default       service/kubernetes   ClusterIP   172.20.0.1    <none>        443/TCP         14m
+kube-system   service/kube-dns     ClusterIP   172.20.0.10   <none>        53/UDP,53/TCP   14m
+
+NAMESPACE     NAME                        DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+kube-system   daemonset.apps/aws-node     2         2         2       2            2           <none>          14m
+kube-system   daemonset.apps/kube-proxy   2         2         2       2            2           <none>          14m
+
+NAMESPACE     NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+kube-system   deployment.apps/coredns   2/2     2            2           14m
+
+NAMESPACE     NAME                                 DESIRED   CURRENT   READY   AGE
+kube-system   replicaset.apps/coredns-86f7d88d77   2         2         2       13m
+----
